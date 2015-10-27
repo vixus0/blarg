@@ -3,6 +3,7 @@
 from markdown import markdown
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
+from shutil import copy
 import os, string, sys
 
 if len(sys.argv) < 2:
@@ -99,7 +100,7 @@ class Blog(object):
         def postify(post, prev=None, next=None):
             tags = []
             for t in post.tags:
-                tags.append({'href':'tags/'+t, 'name':t})
+                tags.append({'href':'tags.html#'+t, 'name':t})
 
             date = post.date.strftime('%d %b %Y @ %H:%M')
 
@@ -116,7 +117,10 @@ class Blog(object):
         self.pages.sort(key=lambda p: p.title)
 
         # Main links
-        site_nav = [{'href':'archive.html', 'title':'archive'}]
+        site_nav = [
+                {'href':'archive.html', 'title':'archive'},
+                {'href':'tags.html', 'title':'tags'}
+                ]
 
         for page in self.pages:
             site_nav.append({'href':page.href, 'title':page.title})
@@ -164,6 +168,14 @@ class Blog(object):
                 site_nav = site_nav,
                 years = self.years,
                 syears = sorted(self.years.keys())
+                )
+
+        # Generate tag pages
+        render_out(arch_template, os.path.join(out_dir, 'tags.html'),
+                title = 'post tags',
+                site_nav = site_nav,
+                years = self.tags,
+                syears = sorted(self.tags.keys())
                 )
 
 
@@ -237,12 +249,6 @@ if pages:
 blog.render()
 
 # Copy static stuff
-def copy(src, dst):
-    with open(src) as fs:
-        d = fs.read()
-        with open(dst, 'w') as fd:
-            fd.write(d)
-
 if not os.path.exists(os.path.join(out_dir, 'static')):
     os.mkdir(os.path.join(out_dir, 'static'))
 
