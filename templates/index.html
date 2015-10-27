@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>/proc/meat: {{title}}</title>
+    <link rel="stylesheet" href="static/style.css">
+  </head>
+  <body>
+    <header>
+      <h1 class="site-title">/proc/meat</h1>
+      {% if site_nav %}
+      <nav class="site-nav">
+        <ul class="float-list">
+          {% for i in site_nav %}
+          <li><a href="{{i.href}}">{{i.title|title}}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+      {% endif %}
+    </header>
+    <article>
+      <section class="post-data">
+        <h1 class="post-title"><a href="." title="Permalink">{{title}}</a></h1>
+        {% if post %}
+        <time>{{post.date}}</time>
+        {% if post.tags %}
+        <div class="tags">
+          <ul class="float-list">
+            {% for t in post.tags %}
+            <li><a href="{{t.href}}">{{t.name}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        <nav class="post-nav">
+          {% if post.prev %}
+          <a class="post-link" rel="Previous" href="{{post.prev.href}}">{{post.prev.title}}</a>
+          {% endif %}
+          {% if post.next %}
+          <a class="post-link" rel="Next" href="{{post.next.href}}">{{post.next.title}}</a>
+          {% endif %}
+        </nav>
+        {% endif %}
+      </section>
+      <main>
+      {% block main %}
+      {{text}}
+      {% endblock main %}
+      </main>
+    </article>
+  </body>
+</html>
