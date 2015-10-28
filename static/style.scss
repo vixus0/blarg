@@ -263,3 +263,16 @@ main {
 .archive-list time {
   margin-right: 15pt;
 }
+
+
+/* Responsiveness */
+
+@media (min-width: 1200px) {
+  .post-data {
+    width: 20%;
+  }
+
+  main {
+    width: 40%;
+  }
+}

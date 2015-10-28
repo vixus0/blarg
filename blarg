@@ -4,6 +4,7 @@ from markdown import markdown
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 from shutil import copy
+from scss.compiler import compile_file as compile_scss
 import os, string, sys
 
 if len(sys.argv) < 2:
@@ -11,9 +12,10 @@ if len(sys.argv) < 2:
     sys.exit(1)
 
 out_dir = sys.argv[1]
-posts_dir = './posts'
-pages_dir = './pages'
-static_dir = './static'
+posts_dir = 'posts'
+pages_dir = 'pages'
+static_dir = 'static'
+scss_dir = 'scss'
 jinja = Environment(trim_blocks=True, loader=FileSystemLoader('templates'))
 main_template = jinja.get_template('index.html')
 arch_template = jinja.get_template('archive.html')
@@ -230,6 +232,12 @@ class Post(object):
 
 
 # Traverse posts and pages
+if not os.path.exists(posts_dir):
+    os.mkdir(posts_dir)
+
+if not os.path.exists(pages_dir):
+    os.mkdir(pages_dir)
+
 posts = os.listdir(posts_dir)
 pages = os.listdir(pages_dir)
 
@@ -253,6 +261,15 @@ if not os.path.exists(os.path.join(out_dir, 'static')):
     os.mkdir(os.path.join(out_dir, 'static'))
 
 for fname in os.listdir(static_dir):
-    static_src = os.path.join(static_dir, fname)
-    static_dst = os.path.join(out_dir, 'static', fname)
-    copy(static_src, static_dst)
+    src = os.path.join(static_dir, fname)
+    dst_dir = os.path.join(out_dir, static_dir)
+    dst = os.path.join(dst_dir, fname)
+    ext = fname.rsplit('.', 1)[-1]
+
+    if ext == 'scss':
+        scss = compile_scss(src)
+        dst = dst.replace('scss', 'css')
+        with open(dst, 'w') as f:
+            f.write(scss)
+    else:
+        copy(src, dst)
