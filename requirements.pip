@@ -1,13 +1,4 @@
-argh==0.26.1
-chardet==2.3.0
-demopan==0.4
-packaging==15.3
-pathtools==0.1.2
-pyxdg==0.25
-PyYAML==3.11
-requests==2.8.1
-urllib3===dev
-virtualenv==13.1.2
-virtualfish==1.0.0
-watchdog==0.8.3
-youtube-dl==2015.9.28
+markdown
+pygments
+jinja2
+pyScss
