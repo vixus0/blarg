@@ -21,7 +21,7 @@ main_template = jinja.get_template('index.html')
 arch_template = jinja.get_template('archive.html')
 
 def clean(s):
-    return ''.join(filter(lambda c: c in string.printable, s))
+    return ''.join(filter(lambda c: c in string.ascii_letters, s))
 
 def hy(s):
     return '-'.join([clean(w.lower()) for w in s.split()])
@@ -36,15 +36,16 @@ def md(s):
 
 def parse_date(s):
     f_d = '%d-%m-%Y'
-    f_hr = '%H:%M'
+    f_hr = '%H.%M'
     ss = s.split()
 
     try:
         if len(ss) > 1:
-            d = datetime.strptime(s, f_d+' '+f_hr)
+            d = datetime.strptime(' '.join(ss), f_d+' '+f_hr)
         else:
             d = datetime.strptime(s, f_d)
-    except:
+    except e:
+        print('Date parsing failed', s, ss, e.get_message())
         d = None
     return d
 
