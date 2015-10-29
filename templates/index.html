@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>/proc/meat/{{title|lower}}</title>
     <link rel="stylesheet" href="static/style.css">
-    <link rel="stylesheet" href="static/pyg.css">
     <link rel="icon" type="image/png" href="/static/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/static/favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/png" href="/static/favicon-16x16.png" sizes="16x16">
@@ -27,16 +26,17 @@
       <section class="post-data">
         <h1 class="post-title"><a href="#" title="Permalink">{{title|lower}}</a></h1>
         {% if post %}
-        <time>{{post.date}}</time>
-        {% if post.tags %}
-        <div class="tags">
-          <ul class="float-list">
+        <dl class="def-list">
+          <dt>Posted On</dt><dd><time>{{post.date}}</time></dd>
+          {% if post.tags %}
+          <dt>Tags</dt>
+          <dd>
             {% for t in post.tags %}
-            <li><a href="{{t.href}}">{{t.name}}</a></li>
+            <a href="{{t.href}}">{{t.name}}</a>
             {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
+          </dd>
+          {% endif %}
+        </dl>
         <nav class="post-nav">
           {% if post.prev %}
           <a class="post-link" rel="Previous" href="{{post.prev.href}}">{{post.prev.title}}</a>

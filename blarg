@@ -51,6 +51,9 @@ def parse_date(s):
 
 def render_out(template, path, **kw):
     s = template.render(**kw)
+    cwd = os.getcwd()
+    path = os.path.join(cwd, path)
+    print('Rendering: ', path)
     with open(path, 'w') as f:
         f.write(s)
 
@@ -258,19 +261,33 @@ if pages:
 blog.render()
 
 # Copy static stuff
+dst_dir = os.path.join(out_dir, static_dir)
+css_merge = []
+scss_merge = []
+
 if not os.path.exists(os.path.join(out_dir, 'static')):
     os.mkdir(os.path.join(out_dir, 'static'))
 
 for fname in os.listdir(static_dir):
     src = os.path.join(static_dir, fname)
-    dst_dir = os.path.join(out_dir, static_dir)
     dst = os.path.join(dst_dir, fname)
     ext = fname.rsplit('.', 1)[-1]
 
     if ext == 'scss':
-        scss = compile_scss(src)
-        dst = dst.replace('scss', 'css')
-        with open(dst, 'w') as f:
-            f.write(scss)
+        print('Got SCSS: ', fname)
+        scss = compile_scss(src, output_style='compressed')
+        scss_merge.extend(scss)
+    elif ext == 'css':
+        print('Got CSS: ', fname)
+        with open(src) as f:
+            css_merge.extend(f.readlines())
     else:
+        print('Copied: ', fname, '->', dst)
         copy(src, dst)
+
+
+# Write style.css
+with open(os.path.join(dst_dir, 'style.css'), 'w') as f:
+    s = ''.join(css_merge) + ''.join(scss_merge)
+    f.write(s)
+    print('Wrote style.css')

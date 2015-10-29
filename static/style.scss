@@ -29,25 +29,7 @@ $color-s-3-3: #336633;
 $color-s-3-4: #1B591B;
 
 
-/* Fonts */
-
-@font-face {
-    font-family: 'CaveStoryRegular';
-    src: url('https://fontlibrary.org/assets/fonts/cave-story/0321279fbcd83858f5e6c4c36c16172d/0ba7f269c83ff9ebd0fff08b79daaa10/CaveStoryRegular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'VTFMisterPixelRegular';
-    src: url('https://fontlibrary.org/assets/fonts/mr-pixel/a07b08efa05d385806a8dff1d02deda1/09547d38eb30497e7c85744eec3c7a36/VTFMisterPixelRegular.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
 /* Styles */
-
 html, * {
   box-sizing: border-box;
   margin: 0;
@@ -210,19 +192,22 @@ main {
   text-shadow: inherit;
 }
 
-.post-data time {
-  display: block;
-  margin: 12pt 0;
-  padding: 2pt 0;
+.def-list {
+  text-align: center;
   border: solid $color-p-2;
   border-width: 3px 0;
-  text-align: center;
+  padding: 12pt 0 3pt 0;
 }
 
-.tags {
-  float: left;
-  width: 100%;
-  background-color: $color-p-2;
+.def-list dt {
+  padding-bottom: 2pt;
+  text-transform: uppercase;
+  font-family: 'CaveStoryRegular';
+  font-size: 12pt;
+  color: $color-p-4;
+}
+
+.def-list dd {
   margin-bottom: 12pt;
 }
 
@@ -230,23 +215,6 @@ main {
   float: left;
   width: 100%;
   clear: both;
-}
-
-.tags a {
-  display: block;
-  padding: 2pt 3pt;
-}
-
-.tags:before {
-  display: block;
-  padding: 5pt;
-  margin-right: 3pt;
-  float: left;
-  content: 'TAGS';
-  color: $color-p-0;
-  font-family: 'CaveStoryRegular', monospace;
-  font-size: 12pt;
-  border-right: 1px solid $color-p-0;
 }
 
 .post-link {
@@ -277,7 +245,6 @@ main {
 
 
 /* Responsiveness */
-
 @media (min-width: 1200px) {
   .post-data {
     width: 20%;
