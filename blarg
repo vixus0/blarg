@@ -316,9 +316,11 @@ elif args.action == 'new':
 
 elif args.action == 'push':
     os.chdir(out_dir)
+    add_cmd = ['git', 'add', '*.html', 'static/*']
     commit_cmd = ['git', 'commit', '-a', '-m', 'Files updated']
     push_cmd = ['git', 'push']
 
+    call(add_cmd)
     call(commit_cmd)
     call(push_cmd)
     print('Pushed, hopefully..')
