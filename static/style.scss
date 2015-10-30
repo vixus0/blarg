@@ -195,22 +195,39 @@ main {
 }
 
 .def-list {
-  text-align: center;
-  border: solid $color-p-2;
-  border-width: 3px 0;
-  padding: 12pt 0 3pt 0;
+  padding: 6pt 0 3pt 0;
+  width: 100%;
 }
 
 .def-list dt {
-  padding-bottom: 2pt;
+  display: inline-block;
+  padding-right: 4pt;
   text-transform: uppercase;
   font-family: 'CaveStoryRegular';
   font-size: 12pt;
-  color: $color-p-4;
+  color: $color-p-2;
+  background-color: $color-p-0;
+  z-index: 0;
 }
 
 .def-list dd {
+  display: inline-block;
+  position: relative;
+  padding-top: 3pt;
   margin-bottom: 12pt;
+  text-align: right;
+  width: 100%;
+
+  &:before {
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background-color: $color-p-2;
+    top: -7.5pt;
+    left: 0;
+    z-index: -1;
+  }
 }
 
 .post-nav {
