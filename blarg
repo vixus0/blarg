@@ -7,6 +7,7 @@ from shutil import copy
 from scss.compiler import compile_file as compile_scss
 from argparse import ArgumentParser
 from subprocess import call
+
 import os, string, sys
 
 posts_dir = 'posts'
@@ -17,7 +18,7 @@ main_template = jinja.get_template('index.html')
 arch_template = jinja.get_template('archive.html')
 
 ap = ArgumentParser()
-ap.add_argument('action', choices=['new', 'render'])
+ap.add_argument('action', choices=['new', 'render', 'push'])
 ap.add_argument('--out', help='Output directory', default='out')
 ap.add_argument('--editor', help='Editor', default='gvim')
 args = ap.parse_args()
@@ -312,3 +313,12 @@ elif args.action == 'new':
         f.write('\n'.join(boiler))
 
     call([args.editor, path])
+
+elif args.action == 'push':
+    os.chdir(out_dir)
+    commit_cmd = ['git', 'commit', '-a', '-m', 'Files updated']
+    push_cmd = ['git', 'push']
+
+    call(commit_cmd)
+    call(push_cmd)
+    print('Pushed, hopefully..')
