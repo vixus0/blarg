@@ -63,11 +63,8 @@ a:hover, a:focus, a:active {
 }
 
 p {
-  font-family: 'CaveStoryRegular', sans-serif;
-  font-size: 21pt;
-  letter-spacing: 0.8pt;
   line-height: 95%;
-  margin-bottom: 10pt;
+  margin-bottom: 12pt;
 }
 
 pre {
@@ -107,12 +104,36 @@ article {
   padding-top: 30pt;
 }
 
+ul {
+  list-style: none;
+}
+
 main {
+  font-family: 'CaveStoryRegular', sans-serif;
+  font-size: 23pt;
+  letter-spacing: 0.8pt;
   float: left;
   width: 60%;
   padding: 20pt;
   margin-left: 30%;
   margin-bottom: 150pt;
+
+  ul {
+    margin-bottom: 12pt;
+  }
+
+  li {
+    margin-left: -18pt;
+  }
+}
+
+li > p {
+  margin: 0;
+  &:before {
+    content: '> ';
+    color: $color-p-4;
+    padding-right: 6pt;
+  }
 }
 
 .site-title {
@@ -121,20 +142,19 @@ main {
   left: 20pt;
   font-size: 30pt;
   color: $dark-grey;
-}
 
-.site-title a { 
-  color: inherit;
-  text-shadow: 3px 3px 0 $color-p-0;
+  a { 
+    color: inherit;
+    text-shadow: 3px 3px 0 $color-p-0;
+  }
 }
 
 .float-list {
-  list-style: none;
   float: left;
-}
 
-.float-list li {
-  float: left;
+  li {
+    float: left;
+  }
 }
 
 .site-nav {
@@ -144,36 +164,36 @@ main {
   right: 0;
   left: 30%;
   background: url('grad.png') repeat-x;
-}
 
-.site-nav ul {
-  padding: 16pt 6pt;
-  font-family: 'VTFMisterPixelRegular', monospace;
-  font-size: 22pt;
-}
+  ul {
+    padding: 16pt 6pt;
+    font-family: 'VTFMisterPixelRegular', monospace;
+    font-size: 22pt;
+  }
 
-.site-nav li {
-  margin-right: 30pt;
-}
+  li {
+    margin-right: 30pt;
+  }
 
-.site-nav a {
-  display: block;
-  padding: 10pt;
-  transform: translateY(0);
-  text-shadow: 0 0 0 $color-p-4;
-  text-transform: lowercase;
-  transition: transform 0.5s, text-shadow 0.5s;
-}
+  a {
+    display: block;
+    padding: 10pt;
+    transform: translateY(0);
+    text-shadow: 0 0 0 $color-p-4;
+    text-transform: lowercase;
+    transition: transform 0.5s, text-shadow 0.5s;
 
-.site-nav a:hover {
-  animation-duration: 0.5s;
-  animation-name: rise;
-  transform: translateY(-5pt);
-  text-shadow: 0 5pt 0 $color-p-4;
-}
+    &:hover {
+      animation-duration: 0.5s;
+      animation-name: rise;
+      transform: translateY(-5pt);
+      text-shadow: 0 5pt 0 $color-p-4;
+    }
 
-.site-nav a:before {
-  content: '/';
+    &:before {
+      content: '/';
+    }
+  }
 }
 
 .post-data {
@@ -187,46 +207,46 @@ main {
   text-shadow: 3px 3px 0 $color-p-4;
   margin-bottom: 24pt;
   color: $color-s-1-1;
-}
 
-.post-title a {
-  color: inherit;
-  text-shadow: inherit;
+  a {
+    color: inherit;
+    text-shadow: inherit;
+  }
 }
 
 .def-list {
   padding: 6pt 0 3pt 0;
   width: 100%;
-}
 
-.def-list dt {
-  display: inline-block;
-  padding-right: 4pt;
-  text-transform: uppercase;
-  font-family: 'CaveStoryRegular';
-  font-size: 12pt;
-  color: $color-p-2;
-  background-color: $color-p-0;
-  z-index: 0;
-}
+  dt {
+    display: inline-block;
+    padding-right: 4pt;
+    text-transform: uppercase;
+    font-family: 'CaveStoryRegular';
+    font-size: 12pt;
+    color: $color-p-2;
+    background-color: $color-p-0;
+    z-index: 0;
+  }
 
-.def-list dd {
-  display: inline-block;
-  position: relative;
-  padding-top: 3pt;
-  margin-bottom: 12pt;
-  text-align: right;
-  width: 100%;
-
-  &:before {
-    content: '';
-    position: absolute;
-    height: 3px;
+  dd {
+    display: inline-block;
+    position: relative;
+    padding-top: 3pt;
+    margin-bottom: 12pt;
+    text-align: right;
     width: 100%;
-    background-color: $color-p-2;
-    top: -7.5pt;
-    left: 0;
-    z-index: -1;
+
+    &:before {
+      content: '';
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      background-color: $color-p-2;
+      top: -7.5pt;
+      left: 0;
+      z-index: -1;
+    }
   }
 }
 
@@ -241,25 +261,24 @@ main {
   margin: 12pt 0;
   font-family: 'CaveStoryRegular', monospace;
   font-size: 24pt;
-}
 
-.post-link:before {
-  display:block;
-  content: attr(rel);
-  color: $color-s-2-1;
-}
+  &:before {
+    display:block;
+    content: attr(rel);
+    color: $color-s-2-1;
+  }
 
-.post-link:hover:before {
-  color: $color-s-3-1;
+  &:hover:before {
+    color: $color-s-3-1;
+  }
 }
 
 .archive-list {
-  list-style: none;
   margin: 12pt 0 24pt 0;
-}
 
-.archive-list time {
-  margin-right: 15pt;
+  time {
+    margin-right: 15pt;
+  }
 }
 
 
