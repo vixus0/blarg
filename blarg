@@ -5,20 +5,24 @@ from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 from shutil import copy
 from scss.compiler import compile_file as compile_scss
+from argparse import ArgumentParser
+from subprocess import call
 import os, string, sys
 
-if len(sys.argv) < 2:
-    print('Specify output directory.')
-    sys.exit(1)
-
-out_dir = sys.argv[1]
 posts_dir = 'posts'
 pages_dir = 'pages'
 static_dir = 'static'
-scss_dir = 'scss'
 jinja = Environment(trim_blocks=True, loader=FileSystemLoader('templates'))
 main_template = jinja.get_template('index.html')
 arch_template = jinja.get_template('archive.html')
+
+ap = ArgumentParser()
+ap.add_argument('action', choices=['new', 'render'])
+ap.add_argument('--out', help='Output directory', default='out')
+ap.add_argument('--editor', help='Editor', default='gvim')
+args = ap.parse_args()
+
+out_dir = args.out
 
 def clean(s):
     return ''.join(filter(lambda c: c in string.ascii_letters, s))
@@ -236,58 +240,75 @@ class Post(object):
 
 
 # Traverse posts and pages
-if not os.path.exists(posts_dir):
-    os.mkdir(posts_dir)
+if args.action == 'render':
+    if not os.path.exists(posts_dir):
+        os.mkdir(posts_dir)
 
-if not os.path.exists(pages_dir):
-    os.mkdir(pages_dir)
+    if not os.path.exists(pages_dir):
+        os.mkdir(pages_dir)
 
-posts = os.listdir(posts_dir)
-pages = os.listdir(pages_dir)
+    posts = os.listdir(posts_dir)
+    pages = os.listdir(pages_dir)
 
-blog = Blog()
+    blog = Blog()
 
-if posts:
-    for p_file in posts:
-        post = Post(os.path.join(posts_dir, p_file))
-        blog.add_post(post)
+    if posts:
+        for p_file in posts:
+            post = Post(os.path.join(posts_dir, p_file))
+            blog.add_post(post)
 
-if pages:
-    for p_file in pages:
-        page = Post(os.path.join(pages_dir, p_file), page=True)
-        blog.add_page(page)
+    if pages:
+        for p_file in pages:
+            page = Post(os.path.join(pages_dir, p_file), page=True)
+            blog.add_page(page)
 
-# Do the thang
-blog.render()
+    # Do the thang
+    blog.render()
 
-# Copy static stuff
-dst_dir = os.path.join(out_dir, static_dir)
-css_merge = []
-scss_merge = []
+    # Copy static stuff
+    dst_dir = os.path.join(out_dir, static_dir)
+    css_merge = []
+    scss_merge = []
 
-if not os.path.exists(os.path.join(out_dir, 'static')):
-    os.mkdir(os.path.join(out_dir, 'static'))
+    if not os.path.exists(os.path.join(out_dir, 'static')):
+        os.mkdir(os.path.join(out_dir, 'static'))
 
-for fname in os.listdir(static_dir):
-    src = os.path.join(static_dir, fname)
-    dst = os.path.join(dst_dir, fname)
-    ext = fname.rsplit('.', 1)[-1]
+    for fname in os.listdir(static_dir):
+        src = os.path.join(static_dir, fname)
+        dst = os.path.join(dst_dir, fname)
+        ext = fname.rsplit('.', 1)[-1]
 
-    if ext == 'scss':
-        print('Got SCSS: ', fname)
-        scss = compile_scss(src, output_style='compressed')
-        scss_merge.extend(scss)
-    elif ext == 'css':
-        print('Got CSS: ', fname)
-        with open(src) as f:
-            css_merge.extend(f.readlines())
-    else:
-        print('Copied: ', fname, '->', dst)
-        copy(src, dst)
+        if ext == 'scss':
+            print('Got SCSS: ', fname)
+            scss = compile_scss(src, output_style='compressed')
+            scss_merge.extend(scss)
+        elif ext == 'css':
+            print('Got CSS: ', fname)
+            with open(src) as f:
+                css_merge.extend(f.readlines())
+        else:
+            print('Copied: ', fname, '->', dst)
+            copy(src, dst)
 
 
-# Write style.css
-with open(os.path.join(dst_dir, 'style.css'), 'w') as f:
-    s = ''.join(css_merge) + ''.join(scss_merge)
-    f.write(s)
-    print('Wrote style.css')
+    # Write style.css
+    with open(os.path.join(dst_dir, 'style.css'), 'w') as f:
+        s = ''.join(css_merge) + ''.join(scss_merge)
+        f.write(s)
+        print('Wrote style.css')
+
+elif args.action == 'new':
+    date = datetime.now()
+    fname = date.strftime('%Y%m%d-%H%M') + '.md'
+    path = os.path.join(posts_dir, fname)
+    boiler = [
+            'Title',
+            '@date: ' + date.strftime('%d-%m-%Y %H.%M'),
+            '@tags: ',
+            ''
+            ]
+
+    with open(path, 'w') as f:
+        f.write('\n'.join(boiler))
+
+    call([args.editor, path])
