@@ -7,6 +7,7 @@ from shutil import copy
 from scss.compiler import compile_file as compile_scss
 from argparse import ArgumentParser
 from subprocess import call
+from tempfile import mkstemp
 
 import os, string, sys
 
@@ -21,7 +22,8 @@ ap = ArgumentParser()
 ap.add_argument('action', choices=['new', 'render', 'push'])
 ap.add_argument('--out', help='Output directory', default='out')
 ap.add_argument('--editor', help='Editor', default='gvim')
-args = ap.parse_args()
+
+args, args_extra = ap.parse_known_args()
 
 out_dir = args.out
 
@@ -299,20 +301,27 @@ if args.action == 'render':
         print('Wrote style.css')
 
 elif args.action == 'new':
+    if args_extra:
+        title = ' '.join(args_extra)
+    else:
+        title = 'Untitled'
+
     date = datetime.now()
-    fname = date.strftime('%Y%m%d-%H%M') + '.md'
+    fname = '{}-{}.md'.format(date.strftime('%Y%m%d-%H%M'), hy(title))
     path = os.path.join(posts_dir, fname)
     boiler = [
-            'Title',
+            title,
             '@date: ' + date.strftime('%d-%m-%Y %H.%M'),
             '@tags: ',
             ''
             ]
 
-    with open(path, 'w') as f:
+    tmpfh, tmpfp = mkstemp(prefix='blarg_')
+
+    with open(tmpfh, 'w') as f:
         f.write('\n'.join(boiler))
 
-    call([args.editor, path])
+    call([args.editor, path, '+r '+tmpfp])
 
 elif args.action == 'push':
     os.chdir(out_dir)
