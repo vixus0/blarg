@@ -1,8 +1,9 @@
+{% set site = "vixus' blog" %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>/proc/meat/{{title|lower}}</title>
+    <title>{{site}}: {{title}}</title>
     <link rel="stylesheet" href="static/style.css">
     <link rel="icon" type="image/png" href="/static/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/static/favicon-96x96.png" sizes="96x96">
@@ -11,10 +12,11 @@
   </head>
   <body>
     <header>
-      <h1 class="site-title"><a href="index.html" title="Home">/proc/meat</a></h1>
+      <h1 class="site-title">{{site}}</h1>
       {% if site_nav %}
       <nav class="site-nav">
         <ul class="float-list">
+          <li><a href="index.html" title="Latest post">Latest</a></li>
           {% for i in site_nav %}
           <li><a href="{{i.href}}">{{i.title|title}}</a></li>
           {% endfor %}
@@ -24,30 +26,27 @@
     </header>
     <article>
       <section class="post-data">
-        <h1 class="post-title"><a href="#" title="Permalink">{{title|lower}}</a></h1>
         {% if post %}
-        <dl class="def-list">
-          <dt>Posted On</dt><dd><time>{{post.date}}</time></dd>
-          {% if post.tags %}
-          <dt>Tags</dt>
-          <dd>
-            {% for t in post.tags %}
-            <a href="{{t.href}}">{{t.name}}</a>
-            {% endfor %}
-          </dd>
-          {% endif %}
-        </dl>
+        <div class="post-data-item" rel="post-date">{{post.date}}</div>
+        {% if post.tags %}
+        <div class="post-data-item" rel="post-tags">
+          {% for t in post.tags %}
+          <a href="{{t.href}}">{{t.name}}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
         <nav class="post-nav">
           {% if post.prev %}
-          <a class="post-link" rel="Previous" href="{{post.prev.href}}">{{post.prev.title}}</a>
+          <a class="post-link" rel="Previous" title="Previous post" href="{{post.prev.href}}">{{post.prev.title}}</a>
           {% endif %}
           {% if post.next %}
-          <a class="post-link" rel="Next" href="{{post.next.href}}">{{post.next.title}}</a>
+          <a class="post-link" rel="Next" title="Next post" href="{{post.next.href}}">{{post.next.title}}</a>
           {% endif %}
         </nav>
         {% endif %}
       </section>
       <main>
+      <h1 class="post-title"><a href="#" title="Permalink">{{title}}</a></h1>
       {% block main %}
       {{text}}
       {% endblock main %}

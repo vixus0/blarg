@@ -2,10 +2,10 @@
 {% block main %}
   {% for y in syears %}
   <section>
-    <h2><a name="{{y}}">{{y}}</h2>
+    <h2><a name="{{y}}">{{y}}</a></h2>
     <ul class="archive-list">
       {% for p in years[y] %}
-      <li><time>{{p.date.strftime('%d %b %Y')}}</time><a href="{{p.href}}">{{p.title}}</a></li>
+      <li><p><time>{{p.date.strftime('%d %b %Y')}}</time><a href="{{p.href}}">{{p.title}}</a></p></li>
       {% endfor %}
     </ul>
   </section>

@@ -265,6 +265,14 @@ if args.action == 'render':
             page = Post(os.path.join(pages_dir, p_file), page=True)
             blog.add_page(page)
 
+    # Remove old html
+    origs = os.listdir(out_dir)
+
+    if origs:
+        for o_file in origs:
+            if o_file.endswith('.html'):
+                os.remove(os.path.join(out_dir, o_file))
+
     # Do the thang
     blog.render()
 
