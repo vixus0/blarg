@@ -89,13 +89,13 @@ header {
 }
 
 p {
-  font-size: 10pt;
+  font-size: 0.8em;
   line-height: 145%;
   margin-bottom: 1.5em;
 }
 
 pre {
-  font-size: 10pt;
+  font-size: 0.8em;
   padding: 1em;
   margin-bottom: 1.5em;
   overflow: auto;
@@ -176,12 +176,12 @@ li > p {
 
 .site-nav {
   font-family: 'MisterPixel', monospace;;
-  font-size: 15pt;
+  font-size: 1.2em;
 }
 
 .post-title {
   font-family: 'MisterPixel', monospace;
-  font-size: 30pt;
+  font-size: 3em;
   font-weight: normal;
   margin-bottom: 0.5em;
 }
@@ -196,7 +196,7 @@ li > p {
 }
 
 .post-data {
-  font-size: 8pt;
+  font-size: 0.8em;
   margin-bottom: 1em;
 }
 
@@ -245,11 +245,11 @@ ul.archive-list {
     position: fixed;
     left: $pad-h;
     width: 30%;
-    font-size: 50pt;
+    font-size: 4em;
   }
 
   .post-link {
-    font-size: 12pt;
+    font-size: 1em;
 
     &:before {
       display: block;
@@ -261,5 +261,15 @@ ul.archive-list {
   main {
     margin-left: 40%;
     width: 50%;
+  }
+}
+
+@media (min-width: 1920px) {
+  body {
+    font-size: 20pt;
+  }
+
+  main {
+    width: 30%;
   }
 }
