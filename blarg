@@ -335,7 +335,7 @@ elif args.action == 'push':
     os.chdir(out_dir)
     add_cmd = ['git', 'add', '*.html', 'static/*']
     commit_cmd = ['git', 'commit', '-a', '-m', 'Files updated']
-    push_cmd = ['git', 'push']
+    push_cmd = ['git', 'push', 'origin', 'master', '-f']
 
     call(add_cmd)
     call(commit_cmd)
