@@ -40,7 +40,7 @@ $post-link-bg: $color-p-3;
 
 $pad-v: 30px;
 $pad-h: 50px;
-$border-w: 20px;
+$border-w: 0;
 
 $pad-t: $pad-v;
 $pad-r: $pad-h;
@@ -66,8 +66,7 @@ body {
   font-family: monospace;
   font-size: 12pt;
   min-height: 100%;
-  border-left: $border-w solid $body-border;
-  background: $body-bg url('dgrad.png') 0 -60px repeat-x fixed;
+  background: $body-bg;
   color: $body-fg;
   padding: $pad-t $pad-r $pad-b $pad-l;
 }
@@ -160,6 +159,36 @@ li > p {
   margin: 0;
 }
 
+blockquote {
+  font-family: sans-serif;
+  font-size: 1.2em;
+  margin: -1.5em 0;
+  color: $color-p-1;
+
+  &:before, &:after {
+    display: block;
+    position: relative;
+    font-weight: bold;
+    font-size: 2em;
+    position: relative;
+    z-index: -10;
+  }
+
+  &:before {
+    content: '“';
+    top: 0.8em;
+    left: 0;
+    margin-left: -35px;
+  }
+
+  &:after {
+    content: '”';
+    bottom: 1em;
+    left: 100%;
+    margin-left: 5px;
+  }
+}
+
 .site-title {
   display: none;
   font-family: 'MisterPixel', monospace;
@@ -177,6 +206,7 @@ li > p {
 .site-nav {
   font-family: 'MisterPixel', monospace;;
   font-size: 1.2em;
+  background: $body-bg url('dgrad.png') 0 -60px repeat-x fixed;
 }
 
 .post-title {
@@ -228,6 +258,10 @@ ul.archive-list {
 @media (min-width: 900px) {
   .site-nav {
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: $pad-v $pad-h;
   }
 
   .post-data {

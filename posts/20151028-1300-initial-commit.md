@@ -2,9 +2,11 @@ Initial Commit
 @tags: python
 @date: 28-10-2015 13.00
 
-Well every programmer and their gran has a blog now so I guess it is about high time I got on the bandwagon. I'm sure people will want to know exactly what I think about the latest developments in getting assembly in your JavaScript in your thing.
+Well every programmer and their has a blog now o I guess it is about high time I got on the bandwagon. I'm sure people will want to know exactly what I think about the latest developments in getting assembly in your JavaScript in your thing.
 
-I looked into using other static site generators before rolling my own, as every good dev does. They're all great, really great. But you know sometimes you get that odd feeling when you're in an entirely strange place where you don't speak the language and you're not quite sure how anything works? Not like you're in danger or anything, just that you want to have a little bit of familiarity so you go and buy pizza or a beer or something because pizza and beer tends to be similar in most places. Anyway so I wrote [my own thing][blarg]. It is _not_ beautiful code but it does the trick (hey, that's Python!)
+After looking into GitHub's Jekyll thing and a bunch of other static site generators, I wrote [my own thing][blarg]. Why did I bother? Because I honestly felt it would be a fun, simple little project. As an efficient programmer it felt wrong not using some pre-existing tool but as a regular programmer it felt wrong _not_ to. It isn't beautiful code but it does the trick. Hey, that's Python!
+
+> ...there is no point writing code more than once since it is just a waste of time and gets pretty boring.
 
 ## README
 
@@ -23,6 +25,6 @@ Usage? Sure:
 
 OUT is where the compiled files will end up. EDITOR is the editor to launch for new posts.
 
-Actions: new - write a new post, render - compile everything, push - commit and push the output directory (I'm assuming it will be a repo.)
+Actions: new - write a new post, render - compile everything, push - commit and push the output directory (I'm assuming it will be a git repo.)
 
 [blarg]: https://github.com/vixus0/blarg "blarg on github"
